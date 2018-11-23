@@ -9,6 +9,10 @@
 
     Changelog:
 
+.. meta::
+    :description lang=zh:
+    :keywords: 遍历,前序,中序,后序,二叉树,traverse, binary tree, preorder, inorder, postorder
+
 ==================
 遍历二叉树(递归法)
 ==================
@@ -18,7 +22,7 @@
 
 .. literalinclude:: /_src/c/binary-tree/traverse/traverse.c
     :caption:
-    :name: c/send_ether/arguments
+    :name: binary-tree/traverse/traverse/preorder
     :language: c
     :lines: 19-43
     :linenos:
@@ -28,7 +32,7 @@
 
 .. literalinclude:: /_src/c/binary-tree/traverse/traverse.c
     :caption:
-    :name: c/send_ether/arguments
+    :name: binary-tree/traverse/traverse/inorder
     :language: c
     :lines: 46-70
     :linenos:
@@ -38,15 +42,11 @@
 
 .. literalinclude:: /_src/c/binary-tree/traverse/traverse.c
     :caption:
-    :name: c/send_ether/arguments
+    :name: binary-tree/traverse/traverse/postorder
     :language: c
     :lines: 73-97
     :linenos:
 
 .. comments
     comment something out below
-
-    .. meta::
-        :description lang=zh:
-        :keywords:
 
