@@ -27,6 +27,7 @@
 
     关于 <about/index>
     二叉树 <binary-tree/index>
+    排序 <sorting/index>
 
 
 
