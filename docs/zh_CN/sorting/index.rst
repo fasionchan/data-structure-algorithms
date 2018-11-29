@@ -9,9 +9,9 @@
 
     Changelog:
 
-=======
+========
 排序算法
-=======
+========
 
 .. figure:: /_images/binary-tree/index/76add5244526f2539e8bdc893663f361.jpg
 
