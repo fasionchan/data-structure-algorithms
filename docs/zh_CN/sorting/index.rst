@@ -19,6 +19,7 @@
     :titlesonly:
 
     冒泡排序 <bubble-sort>
+    选择排序 <select-sort>
 
 .. comments
     comment something out blow
