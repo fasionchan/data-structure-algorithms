@@ -20,6 +20,7 @@
 
     冒泡排序 <bubble-sort>
     选择排序 <select-sort>
+    归并排序 <merge-sort>
 
 .. comments
     comment something out blow

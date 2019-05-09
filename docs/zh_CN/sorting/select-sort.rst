@@ -9,6 +9,15 @@
 
     Changelog:
 
+    Note:
+        You can adapt this file completely to your liking, but it should at least
+        contain the root `toctree` directive.
+
+.. meta::
+    :description lang=zh:
+        本专栏收录常用数据结构及算法，附以详细讲解和代码示例。
+    :keywords: Data Structure, Algorithm, C++, Javascript, Python, 数据结构, 算法
+
 ======================
 选择排序(JavaScript版)
 ======================
