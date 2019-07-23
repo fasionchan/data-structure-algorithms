@@ -2,14 +2,10 @@
  * Author: fasion
  * Created time: 2019-07-20 16:16:06
  * Last Modified by: fasion
- * Last Modified time: 2019-07-22 13:59:07
+ * Last Modified time: 2019-07-23 15:22:50
  */
 
 public class ArrayList<AnyType> implements Iterable<AnyType> {
-	private static final int DEFAULT_CAPACITY = 10;
-
-	private int listSize;
-	private AnyType[] listItems;
 
 	public ArrayList() {
 		listItems = (AnyType[]) new Object[DEFAULT_CAPACITY];
@@ -33,45 +29,57 @@ public class ArrayList<AnyType> implements Iterable<AnyType> {
 	}
 
 	public AnyType get(int idx) {
+		// index out of bounds
 		if (idx < 0 || idx >= size()) {
 			throw new ArrayIndexOutOfBoundsException();
 		}
+
 		return listItems[idx];
 	}
 
 	public AnyType set(int idx, AnyType newVal) {
+		// index out of bounds
 		if (idx < 0 || idx >= size()) {
 			throw new ArrayIndexOutOfBoundsException();
 		}
 
-		AnyType old = listItems[idx];
+		// store old value for returning
+		AnyType oldVal = listItems[idx];
 		listItems[idx] = newVal;
 
-		return old;
+		return oldVal;
 	}
 
 	public void ensureCapacity(int newCapacity) {
+		// current capacity is enough
 		if (newCapacity <= capacity()) {
 			return;
 		}
 
+		// record old items
 		AnyType [] oldItems = listItems;
 
+		// allocate memory with new capactity
 		listItems = (AnyType []) new Object[newCapacity];
+
+		// copy old items
 		for (int i = 0; i < size(); i++) {
 			listItems[i] = oldItems[i];
 		}
 	}
 
 	public void add(int idx, AnyType x) {
-		if (size() == capacity()) {
+		// there's no space left
+		if (isFull()) {
 			ensureCapacity(capacity() * 2);
 		}
 
-		for (int i = size(); i > idx; i--) {
-			listItems[i] = listItems[i-1];
+		// shift items behind backward
+		for (int i = size() - 1; i >= idx; i--) {
+			listItems[i+1] = listItems[i];
 		}
 
+		// store new item
 		listItems[idx] = x;
 		listSize++;
 	}
@@ -81,14 +89,17 @@ public class ArrayList<AnyType> implements Iterable<AnyType> {
 	}
 
 	public AnyType remove(int idx) {
+		// index out of bounds
 		if (idx < 0 || idx >= size()) {
 			throw new ArrayIndexOutOfBoundsException();
 		}
 
+		// store value for returning
 		AnyType value = listItems[idx];
 
-		for (int i = idx; i < size() - 1; i++) {
-			listItems[i] = listItems[i+1];
+		// shift items behind forward
+		for (int i = idx + 1; i < size(); i++) {
+			listItems[i-1] = listItems[i];
 		}
 
 		listSize--;
@@ -97,7 +108,7 @@ public class ArrayList<AnyType> implements Iterable<AnyType> {
 	}
 
 	public void print(String hint) {
-		System.out.printf("%s[", hint);
+		System.out.printf("%s[ ", hint);
 
 		for (int i = 0; i < listSize; i++) {
 			System.out.printf("%s ", listItems[i]);
@@ -106,28 +117,36 @@ public class ArrayList<AnyType> implements Iterable<AnyType> {
 		System.out.printf("]\n");
 	}
 
+	public java.util.Iterator<AnyType> iterator() {
+		return new ArrayListIterator();
+	}
+
 	private class ArrayListIterator implements java.util.Iterator<AnyType> {
-		private int current = 0;
+		// index for next item
+		private int next = 0;
 
 		public boolean hasNext() {
-			return current < size();
+			// index in bounds
+			return next < size();
 		}
 
 		public AnyType next() {
 			if (!hasNext()) {
 				throw new java.util.NoSuchElementException();
 			}
-			return listItems[current++];
+
+			return listItems[next++];
 		}
 
 		public void remove() {
-			ArrayList.this.remove(--current);
+			ArrayList.this.remove(--next);
 		}
 	}
 
-	public java.util.Iterator<AnyType> iterator() {
-		return new ArrayListIterator();
-	}
+	private static final int DEFAULT_CAPACITY = 10;
+
+	private int listSize;
+	private AnyType[] listItems;
 
 	public static void main(String args[]) {
 		ArrayList<Integer> list = new ArrayList<Integer>();

@@ -2,15 +2,13 @@
  * Author: fasion
  * Created time: 2019-07-20 16:16:06
  * Last Modified by: fasion
- * Last Modified time: 2019-07-22 14:57:07
+ * Last Modified time: 2019-07-23 15:22:27
  */
 
-public class GenericArrayList<AnyType> {
-	private int listSize;
-	private AnyType[] listItems;
+public class DynamicArrayList<AnyType> {
 
-	public GenericArrayList(int capacity) {
-		listItems = (AnyType[]) new Object[capacity];
+	public DynamicArrayList() {
+		listItems = (AnyType[]) new Object[DEFAULT_CAPACITY];
 		listSize = 0;
 	}
 
@@ -31,49 +29,77 @@ public class GenericArrayList<AnyType> {
 	}
 
 	public AnyType get(int idx) {
+		// index out of bounds
 		if (idx < 0 || idx >= size()) {
 			throw new ArrayIndexOutOfBoundsException();
 		}
+
 		return listItems[idx];
 	}
 
 	public AnyType set(int idx, AnyType newVal) {
+		// index out of bounds
 		if (idx < 0 || idx >= size()) {
 			throw new ArrayIndexOutOfBoundsException();
 		}
 
-		AnyType old = listItems[idx];
+		// store old value for returning
+		AnyType oldVal = listItems[idx];
 		listItems[idx] = newVal;
 
-		return old;
+		return oldVal;
+	}
+
+	public void ensureCapacity(int newCapacity) {
+		// current capacity is enough
+		if (newCapacity <= capacity()) {
+			return;
+		}
+
+		// record old items
+		AnyType [] oldItems = listItems;
+
+		// allocate memory with new capactity
+		listItems = (AnyType []) new Object[newCapacity];
+
+		// copy old items
+		for (int i = 0; i < size(); i++) {
+			listItems[i] = oldItems[i];
+		}
+	}
+
+	public void add(int idx, AnyType x) {
+		// there's no space left
+		if (isFull()) {
+			ensureCapacity(capacity() * 2);
+		}
+
+		// shift items behind backward
+		for (int i = size() - 1; i >= idx; i--) {
+			listItems[i+1] = listItems[i];
+		}
+
+		// store new item
+		listItems[idx] = x;
+		listSize++;
 	}
 
 	public void add(AnyType x) {
 		add(size(), x);
 	}
 
-	public void add(int idx, AnyType x) {
-		if (size() == capacity()) {
-			throw new ArrayOutOfCapacity();
-		}
-
-		for (int i = size(); i > idx; i--) {
-			listItems[i] = listItems[i-1];
-		}
-
-		listItems[idx] = x;
-		listSize++;
-	}
-
 	public AnyType remove(int idx) {
+		// index out of bounds
 		if (idx < 0 || idx >= size()) {
 			throw new ArrayIndexOutOfBoundsException();
 		}
 
+		// store value for returning
 		AnyType value = listItems[idx];
 
-		for (int i = idx; i < size() - 1; i++) {
-			listItems[i] = listItems[i+1];
+		// shift items behind forward
+		for (int i = idx + 1; i < size(); i++) {
+			listItems[i-1] = listItems[i];
 		}
 
 		listSize--;
@@ -82,7 +108,7 @@ public class GenericArrayList<AnyType> {
 	}
 
 	public void print(String hint) {
-		System.out.printf("%s[", hint);
+		System.out.printf("%s[ ", hint);
 
 		for (int i = 0; i < listSize; i++) {
 			System.out.printf("%s ", listItems[i]);
@@ -91,32 +117,13 @@ public class GenericArrayList<AnyType> {
 		System.out.printf("]\n");
 	}
 
+	private static final int DEFAULT_CAPACITY = 10;
+
+	private int listSize;
+	private AnyType[] listItems;
+
 	public static void main(String args[]) {
-		GenericArrayList<String> strlist = new GenericArrayList<String>(10);
-		strlist.print("After init: ");
-		System.out.println();
-
-		strlist.add("apple");
-		strlist.add("boy");
-		strlist.add("cat");
-
-		strlist.print("After add apple boy cat: ");
-		System.out.printf("#1 is: %s\n", strlist.get(1));
-		System.out.println();
-
-		strlist.add(0, "Ant");
-		strlist.print("After insert Ant: ");
-		System.out.println();
-
-		strlist.remove(1);
-		strlist.print("After remove #1: ");
-		System.out.println();
-
-		strlist.add("dog");
-		strlist.print("After append four: ");
-		System.out.println();
-
-		GenericArrayList<Integer> list = new GenericArrayList<Integer>(10);
+		DynamicArrayList<Integer> list = new DynamicArrayList<Integer>();
 		list.print("After init: ");
 		System.out.println();
 
@@ -138,6 +145,13 @@ public class GenericArrayList<AnyType> {
 
 		list.add(4);
 		list.print("After append 4: ");
+		System.out.println();
+
+		for (int i = 5; i < 20; i++) {
+			list.add(i);
+		}
+
+		list.print("Finally: ");
 		System.out.println();
 	}
 }

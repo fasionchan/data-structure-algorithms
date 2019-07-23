@@ -2,12 +2,10 @@
  * Author: fasion
  * Created time: 2019-07-20 16:16:06
  * Last Modified by: fasion
- * Last Modified time: 2019-07-22 14:55:42
+ * Last Modified time: 2019-07-23 15:21:41
  */
 
 public class NaiveArrayList {
-	private int listSize;
-	private int[] listItems;
 
 	public NaiveArrayList(int capacity) {
 		listItems = new int[capacity];
@@ -31,49 +29,59 @@ public class NaiveArrayList {
 	}
 
 	public int get(int idx) {
+		// index out of bounds
 		if (idx < 0 || idx >= size()) {
 			throw new ArrayIndexOutOfBoundsException();
 		}
+
 		return listItems[idx];
 	}
 
 	public int set(int idx, int newVal) {
+		// index out of bounds
 		if (idx < 0 || idx >= size()) {
 			throw new ArrayIndexOutOfBoundsException();
 		}
 
-		int old = listItems[idx];
+		// store old value for returning
+		int oldVal = listItems[idx];
 		listItems[idx] = newVal;
 
-		return old;
+		return oldVal;
+	}
+
+	public void add(int idx, int x) {
+		// there's no space left
+		if (isFull()) {
+			throw new ArrayOutOfCapacity();
+		}
+
+		// shift items behind backward
+		for (int i = size() - 1; i >= idx; i--) {
+			listItems[i+1] = listItems[i];
+		}
+
+		// store new item
+		listItems[idx] = x;
+		listSize++;
 	}
 
 	public void add(int x) {
 		add(size(), x);
 	}
 
-	public void add(int idx, int x) {
-		if (size() == capacity()) {
-			throw new ArrayOutOfCapacity();
-		}
-
-		for (int i = size(); i > idx; i--) {
-			listItems[i] = listItems[i-1];
-		}
-
-		listItems[idx] = x;
-		listSize++;
-	}
-
 	public int remove(int idx) {
+		// index out of bounds
 		if (idx < 0 || idx >= size()) {
 			throw new ArrayIndexOutOfBoundsException();
 		}
 
+		// store value for returning
 		int value = listItems[idx];
 
-		for (int i = idx; i < size() - 1; i++) {
-			listItems[i] = listItems[i+1];
+		// shift items behind forward
+		for (int i = idx + 1; i < size(); i++) {
+			listItems[i-1] = listItems[i];
 		}
 
 		listSize--;
@@ -82,14 +90,17 @@ public class NaiveArrayList {
 	}
 
 	public void print(String hint) {
-		System.out.printf("%s[", hint);
+		System.out.printf("%s[ ", hint);
 
 		for (int i = 0; i < listSize; i++) {
-			System.out.printf("%d ", listItems[i]);
+			System.out.printf("%s ", listItems[i]);
 		}
 
 		System.out.printf("]\n");
 	}
+
+	private int listSize;
+	private int[] listItems;
 
 	public static void main(String args[]) {
 		NaiveArrayList list = new NaiveArrayList(10);

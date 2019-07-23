@@ -26,6 +26,10 @@
     :titlesonly:
 
     关于 <about/index>
+    基础知识 <base/index>
+    表 <list/index>
+    栈 <stack/index>
+    队列 <queue/index>
     二叉树 <binary-tree/index>
     排序 <sorting/index>
 
