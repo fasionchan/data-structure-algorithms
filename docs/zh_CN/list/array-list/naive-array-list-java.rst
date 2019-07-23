@@ -177,7 +177,7 @@
 #. 第 *17* 行，返回被删除元素；
 
 辅助方法
--------
+--------
 
 打印
 ++++
@@ -192,6 +192,9 @@
 	:lines: 92-100
 
 该方法接收一个参数 *hint* ，用于区分不同时机的打印。
+
+时间复杂度
+==========
 
 类应用
 ======
@@ -270,6 +273,8 @@
 .. include:: /_fragments/disqus.rst
 
 .. include:: /_fragments/wechat-reward.rst
+
+.. _NaiveArrayList.java: https://github.com/fasionchan/data-structure-algorithms/blob/master/src/java/list/NaiveArrayList/NaiveArrayList.java
 
 .. comments
 	comment something out below
