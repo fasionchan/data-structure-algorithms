@@ -17,6 +17,7 @@
    :maxdepth: 2
 
     交流 <contact>
+    推荐书单 <../appendices/recommended-books>
 
 .. comments
     comment something out blow

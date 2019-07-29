@@ -1,4 +1,4 @@
-.. 关于
+.. 二叉树
     FileName:   index.rst
     Author:     Fasion Chan
     Created:    2018-08-27 20:08:14
@@ -18,6 +18,7 @@
 .. toctree::
     :titlesonly:
 
+    定义 <definations>
     遍历二叉树 <traverse>
     重建二叉树 <rebuild>
 

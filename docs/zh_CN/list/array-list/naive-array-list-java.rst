@@ -11,7 +11,8 @@
 
 .. meta::
 	:description lang=zh:
-	:keywords:
+		朴素数组表(Naive Array List)是本文自创的名词，表示一种最直观最原始的数组表。
+    :keywords: Data Structure, Array, Dynamic Array, Array List, Java
 
 ====================
 朴素数组表(Java语言)

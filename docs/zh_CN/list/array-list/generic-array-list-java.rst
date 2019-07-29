@@ -28,7 +28,7 @@
 ======
 
 泛型编程的思想是，在实现类或方法时，暂时不指定类型，而是稍后再决定使用什么类型。
-为达到这个目的，需要借助类型参数，以尖括号括住，位于类名之后：
+为达到这个目的，需要借助 **类型参数** ，位于类名之后，以尖括号括住：
 
 .. literalinclude:: /_src/java/list/GenericArrayList/GenericArrayList.java
 	:language: java
@@ -64,7 +64,7 @@
 	:lines: 40-51
 	:linenos:
 
-最后，使用该类实例化对象时，通过尖括号确定实际类型。
+最后，创建该类对象时，通过尖括号确定实际类型。
 
 例如，创建一个存储整数的数组表对象：
 
@@ -83,6 +83,9 @@
 	:dedent: 8
 	:lines: 106
 	:linenos:
+
+下一步
+======
 
 .. include:: /_fragments/next-step-to-wechat-mp.rst
 

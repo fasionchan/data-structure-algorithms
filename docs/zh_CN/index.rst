@@ -32,8 +32,7 @@
     队列 <queue/index>
     二叉树 <binary-tree/index>
     排序 <sorting/index>
-
-
+    附录 <appendices/index>
 
 .. comments
     comment something out below
