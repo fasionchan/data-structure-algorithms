@@ -1,23 +1,26 @@
-// 单向链表
+class Node {
+  constructor (ele) {
+    this.ele = ele
+    this.next = null
+  }
+}
 
-function LinkList () {
-  let head = null;
-  let length = 0;
-
-  function Node (ele) {
-    this.ele = ele;
-    this.next = null;
+class LinkList {
+  constructor () {
+    this.head = null
+    this.tail  = null
+    this.length = 0
   }
 
-  this.append = function (ele) {
+  append (ele) {
     let node = new Node(ele);
 
-    let cur = head;
+    let cur = this.head;
 
     if (cur == null) {
-      head = node;
+      this.head = node;
     } else {
-      for(let i=0; i<length; i++) {
+      for(let i=0; i<this.length; i++) {
         if (cur.next === null) {
           cur.next = node;
         }
@@ -25,16 +28,16 @@ function LinkList () {
       }
     }
 
-    length++;
+    this.length++;
   }
 
-  this.insert = function (ele, pos) {
+  insert (ele, pos) {
     let node = new Node(ele);
-    let cur = head;
+    let cur = this.head;
 
     if (pos === 0) {
       node.next = cur;
-      head = node;
+      this.head = node;
     } else {
       for(let i=1; i<=pos; i++) {
         if (i === pos) {
@@ -44,19 +47,19 @@ function LinkList () {
         cur = cur.next;
       }
     }
-    length++;
+    this.length++;
   }
 
-  this.removeAt = function (pos) {
+  removeAt (pos) {
     // 边界检查
-    if (pos <= -1 || pos >= length) {
+    if (pos <= -1 || pos >= this.length) {
       return -1;
     }
 
-    let cur = head;
+    let cur = this.head;
 
     if (pos === 0) {
-      head = cur.next;
+      this.head = cur.next;
       cur = null;
     } else {
       for(let i=1; i<=pos; i++) {
@@ -69,18 +72,18 @@ function LinkList () {
       }
     }
 
-    length--;
+    this.length--;
   }
 
-  this.remove = function (ele) {
-    let cur = head;
+  remove (ele) {
+    let cur = this.head;
     let next = cur.next;
     if (cur.ele === ele) {
-      head = cur.next;
+      this.head = cur.next;
       cur = null;
       length--;
     } else {
-      for(let i=0; i<length-1; i++) {
+      for(let i=0; i<this.length-1; i++) {
         if (next && next.ele === ele) {
           cur.next = next.next;
           next = null;
@@ -90,13 +93,13 @@ function LinkList () {
           next = cur.next;
         }
       }
-      length--;
+      this.length--;
     }
   }
 
-  this.indexOf = function (ele) {
-    let cur = head;
-    for(let i=0; i<length; i++) {
+  indexOf (ele) {
+    let cur = this.head;
+    for(let i=0; i<this.length; i++) {
       if (cur.ele === ele) {
         return i;
       }
@@ -105,33 +108,79 @@ function LinkList () {
     }
   }
 
-  this.isEmpty = function () {
-    if (length === 0) {
+  isEmpty () {
+    if (this.length === 0) {
       return true;
     }
 
     return false;
   }
 
-  this.size = function () {
-    return length;
+  size () {
+    return this.length;
   }
 
-  this.getHead = function () {
-    return head;
+  getHead () {
+    return this.head;
   }
 
-  this.toString = function () {
+  getTail () {
+    let cur = this.head
 
+    if (this.length === 0) {
+      this.tail = null
+    } else if (this.length === 1) {
+      this.tail = this.head
+    } else {
+      while(cur.next) {
+        cur = cur.next
+      }
+
+      this.tail = cur
+    }
   }
 
-  this.print = function () {
-    let cur = head;
+  print () {
+    let cur = this.head;
 
     while(cur !== null) {
       console.log(cur.ele);
       cur = cur.next;
     }
+  }
+  // 是否相交
+  isIntersect (linklist) {
+    if (this.tail === linklist.tail) {
+      return true
+    }
+  }
+
+  findIntersectNode (linklist) {
+    let len1 = this.length
+    let len2 = linklist.length
+
+    let cur1 = this.head
+    let cur2 = linklist.head
+
+    let i = Math.abs(len1 - len2)
+
+    for (let j=0; j<i; j++) {
+      if (len1 > len2) {
+        cur1 = cur1.next
+      } else {
+        cur2 = cur2.next
+      }
+    }
+
+    while (cur1) {
+      if (cur1 === cur2) {
+        return cur1
+      }
+      cur1 = cur1.next
+      cur2 = cur2.next
+    }
+
+    return null
   }
 }
 
